@@ -10,7 +10,7 @@
 <img width="1902" height="845" alt="01-sagemaker" src="https://github.com/user-attachments/assets/c79d1f0b-6892-41bb-ac0a-be0dbf60f243" />
 
 ### Feature Engineering — 4 New Features Verified
-<img width="1896" height="900" alt="02-sagemaker" src="https://github.com/user-attachments/assets/76add932-5f62-4fe3-bbc2-c0da534606a5" />
+<img width="1897" height="887" alt="02-sagemaker" src="https://github.com/user-attachments/assets/8401d4c2-0ea4-4066-aef1-3de68be25b9e" />
 
 ---
 
