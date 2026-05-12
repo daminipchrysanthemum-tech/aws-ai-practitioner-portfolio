@@ -149,8 +149,3 @@ print("Endpoint deleted — no more charges.")
 ## 💡 What I Learned
 
 Working through this project taught me how AWS separates the training and deployment steps — you pay for compute only while it's running. The most surprising thing was how much feature engineering matters: adding just 4 derived columns could cut RMSE by 15–25% without changing the algorithm at all. It maps directly to what the AIF-C01 exam tests in the ML fundamentals domain.
-
-
----
-
-*Part of [aws-ai-practitioner-portfolio](../README.md) — hands-on projects for the AWS Certified AI Practitioner exam.*
