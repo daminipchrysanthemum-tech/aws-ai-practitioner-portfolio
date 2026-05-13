@@ -135,7 +135,7 @@ print("Endpoint deleted — no more charges.")
 ## 📁 Files
 
 ```
-01-sagemaker/
+House Price Predictor - 01/
 ├── california_housing.ipynb
 ├── screenshots/
 │   ├── predictions_output.png
