@@ -1,0 +1,200 @@
+## 🔍 Photo Content Moderator — Amazon Rekognition
+
+> Automatically scans images for inappropriate or unsafe content using Amazon Rekognition's pre-trained computer vision models. Built as part of my AWS Certified AI Practitioner (AIF-C01) hands-on portfolio.
+
+---
+
+## 📸 Screenshot
+
+### Final Moderation Report
+
+
+
+---
+
+## 📊 Results
+
+| Image | Moderation Status |
+|-------|-----------------|
+| safe_park.jpg | ✅ Clean |
+| test_safe.jpg | ✅ Clean |
+| test_nature.jpg | ✅ Clean |
+| test_warning.jpg | ✅ Clean |
+
+All 4 images correctly identified as safe content with `MinConfidence=10` — demonstrating the moderator works end-to-end and correctly returns Clean for non-flagged images.
+
+---
+
+## 🧠 What This Project Does
+
+Uses **Amazon Rekognition's `detect_moderation_labels` API** to scan images stored in S3 and classify them as safe or flagged. For each image, Rekognition returns a list of moderation labels (e.g. Explicit Nudity, Violence, Drugs, Alcohol, Gambling) with confidence scores from 0–100. The notebook loops through a batch of images and produces a final summary report as a pandas DataFrame.
+
+---
+
+## 🔑 Key Difference from SageMaker
+
+| | SageMaker | Rekognition |
+|--|-----------|-------------|
+| Model training | You train your own | Pre-trained by AWS |
+| Endpoints | You deploy and manage | No endpoints needed |
+| Cleanup | Must delete endpoint | Nothing to delete |
+| Billing | Per instance-hour | Per API call (~$0.001/image) |
+| Expertise needed | ML knowledge required | No ML expertise needed |
+
+---
+
+## ⚙️ How It Works
+
+```
+Image uploaded to S3
+        ↓
+rekognition.detect_moderation_labels()
+        ↓
+Returns list of ModerationLabels with confidence scores
+        ↓
+If labels empty → "Clean"
+If labels found → "Flagged: <category>"
+        ↓
+Results compiled into pandas DataFrame report
+```
+
+---
+
+## 🗂️ Moderation Categories Rekognition Can Detect
+
+| Category | Examples |
+|----------|---------|
+| Explicit Content | Adult nudity, suggestive content |
+| Violence | Graphic violence, weapon use |
+| Drugs & Tobacco | Drug use, drug paraphernalia |
+| Alcohol | Drinking, alcohol products |
+| Gambling | Casino imagery |
+| Hate Symbols | Extremist symbols |
+| Rude Gestures | Offensive hand gestures |
+
+---
+
+## 💻 Core Code
+
+```python
+import boto3
+import pandas as pd
+
+rekognition = boto3.client("rekognition", region_name="us-east-1")
+
+def moderate_image(bucket, image_key, min_confidence=50):
+    response = rekognition.detect_moderation_labels(
+        Image={
+            "S3Object": {
+                "Bucket": bucket,
+                "Name":   image_key
+            }
+        },
+        MinConfidence=min_confidence
+    )
+
+    labels = [l["Name"] for l in response["ModerationLabels"]]
+    status = "Clean" if not labels else ", ".join(labels)
+    return status
+
+# Batch scan multiple images
+all_files = ["safe_park.jpg", "test_safe.jpg", "test_nature.jpg", "test_warning.jpg"]
+results_data = []
+
+for filename in all_files:
+    response = rekognition.detect_moderation_labels(
+        Image={"S3Object": {"Bucket": bucket_name, "Name": f"{s3_prefix}/{filename}"}},
+        MinConfidence=10
+    )
+    labels = [l["Name"] for l in response["ModerationLabels"]]
+    status = "Clean" if not labels else ", ".join(labels)
+    results_data.append({"Image Name": filename, "Moderation Status": status})
+
+df = pd.DataFrame(results_data)
+print("--- FINAL MODERATION REPORT ---")
+display(df)
+```
+
+---
+
+## 🧪 AWS Concepts Practiced
+
+- ✅ Amazon Rekognition `detect_moderation_labels` API
+- ✅ Amazon Rekognition `detect_labels` API (object detection)
+- ✅ S3 image storage and API integration
+- ✅ Confidence score thresholds (`MinConfidence`)
+- ✅ Pre-trained vs custom models (no training needed)
+- ✅ Serverless / pay-per-call pricing model
+- ✅ `boto3` client for AWS AI services
+- ✅ pandas DataFrame for results reporting
+- ✅ Batch processing multiple images
+
+---
+
+## 📝 AIF-C01 Exam Topics This Covers
+
+| Topic | Domain |
+|-------|--------|
+| Pre-built AI services vs custom models | Domain 1: Fundamentals of AI/ML |
+| Confidence scores and thresholds | Domain 1: Fundamentals of AI/ML |
+| Computer vision use cases | Domain 1: Fundamentals of AI/ML |
+| Responsible AI — content moderation | Domain 4: Responsible AI |
+| Serverless / pay-per-call pricing | Domain 2: Generative AI Fundamentals |
+| When to use Rekognition vs SageMaker | Domain 1: Fundamentals of AI/ML |
+| S3 as data source for AI services | Domain 5: Security & Governance |
+
+---
+
+## 🚀 How to Run
+
+### Prerequisites
+- AWS account with SageMaker Studio access
+- IAM role with Rekognition + S3 permissions
+- Images uploaded to your SageMaker S3 bucket
+
+### Steps
+1. Open `rekognition_content_moderator.ipynb` in SageMaker Studio
+2. Run all cells top to bottom
+3. View the Final Moderation Report table at the bottom
+
+### No cleanup needed
+Unlike SageMaker, Rekognition has no endpoints or instances to shut down. There are no running resources — you only pay per API call.
+
+---
+
+## 💡 Key Concept: MinConfidence Threshold
+
+```python
+# Strict — only report high-confidence findings (fewer false positives)
+MinConfidence=80
+
+# Balanced — good for most use cases
+MinConfidence=50
+
+# Sensitive — catch everything, more false positives
+MinConfidence=10
+```
+
+Adjusting `MinConfidence` is a core trade-off between **precision** (fewer false positives) and **recall** (catching more real issues). This is a frequently tested concept on the AIF-C01 exam.
+
+---
+
+## 📁 Files
+
+```
+02-rekognition/
+├── rekognition_content_moderator.ipynb
+├── screenshots/
+│   └── photo_content_moderator.png
+└── README.md
+```
+
+---
+
+## 💡 What I Learned
+
+The biggest insight from this project was understanding the difference between **managed AI services** and **custom ML models**. With Rekognition I called a single API and got production-quality computer vision results in under 2 seconds — no training data, no model deployment, no cleanup. This is the core trade-off the AIF-C01 exam tests: use a pre-built service like Rekognition when your use case fits, use SageMaker when you need a custom model for a unique problem.
+
+---
+
+*Part of [aws-ai-practitioner-portfolio](../README.md) — hands-on projects for the AWS Certified AI Practitioner exam.*
