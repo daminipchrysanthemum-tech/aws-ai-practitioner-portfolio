@@ -498,7 +498,7 @@ display(df)
 
 ---
 
-## 📝 AIF-C01 Exam Topics This Covers
+## 📝 AIF-C01 Exam Topics It Covers
 
 | Topic | Domain |
 |-------|--------|
@@ -564,8 +564,7 @@ nothing to shut down. Cost: ~$0.0001 per 100 characters of text.
 
 ## 💡 What I Learned
 
-The biggest insight was understanding **mixed sentiment** — reviews that are genuinely both positive and negative at the same time (good sound quality but uncomfortable fit). Comprehend handles this with a dedicated MIXED label rather than forcing a binary choice. This matters in real-world applications like product feedback dashboards where nuanced sentiment is more useful than a simple thumbs up/down. I also learned that IAM permissions must be explicitly granted per service — my SageMaker role needed `ComprehendFullAccess` added before any Comprehend API calls would work, which is a direct example of the principle of least privilege tested on AIF-C01.
-
+The biggest insight was understanding mixed sentiment — reviews that are genuinely both positive and negative at the same time (good sound quality but uncomfortable fit). Comprehend handles this with a dedicated MIXED label rather than forcing a binary choice. It matters in real-world applications like product feedback dashboards, where nuanced sentiment is more useful than a simple thumbs up/down. I also learned that IAM permissions must be explicitly granted per service — my SageMaker role needed ComprehendFullAccess added before any Comprehend API calls would work, which is a direct example of the Principle of least privilege tested on AIF-C01.
 ---
 
 
