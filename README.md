@@ -7,10 +7,11 @@
 ## 📸 Screenshots
 
 ### Model Predictions & RMSE
-<img width="1902" height="845" alt="01-sagemaker" src="https://github.com/user-attachments/assets/c79d1f0b-6892-41bb-ac0a-be0dbf60f243" />
+<img width="1902" height="845" alt="House Price Predictor 01" src="https://github.com/user-attachments/assets/8687ac4d-95e0-4578-bc0d-1431812b13e9" />
+
 
 ### Feature Engineering — 4 New Features Verified
-<img width="1897" height="887" alt="02-sagemaker" src="https://github.com/user-attachments/assets/8401d4c2-0ea4-4066-aef1-3de68be25b9e" />
+<img width="1897" height="887" alt="House Price Predictor - 02" src="https://github.com/user-attachments/assets/99426783-ca5a-4cb7-b02c-8e22955863cc" />
 
 ---
 
@@ -135,11 +136,11 @@ print("Endpoint deleted — no more charges.")
 ## 📁 Files
 
 ```
-House Price Predictor - 01/
+House Price Predictor 
 ├── california_housing.ipynb
 ├── screenshots/
-│   ├── predictions_output.png
-│   └── feature_engineering.png
+│   ├── house_price_predictor-01.png
+│   └── house price_predictor_02.png
 └── results/
     └── predictions_v1.csv
 ```
@@ -527,7 +528,7 @@ Comprehend returns 4 scores per review, always summing to 1.0:
 # → Sentiment: POSITIVE (98.6% confident)
 ```
 
-A score above 0.95 is high confidence. Scores between 0.50–0.75 indicate
+A score above 0.95 is high confidence. Scores between 0.50 and 0.75 indicate
 weaker or more ambiguous sentiment — worth flagging for human review.
 This threshold concept is frequently tested on the AIF-C01 exam.
 
@@ -569,4 +570,209 @@ The biggest insight was understanding mixed sentiment — reviews that are genui
 
 ---
 
+## 🤖 Document Q&A Bot — Amazon Bedrock
+
+> Builds a multi-turn conversational Q&A bot that answers questions from any document using Amazon Bedrock's Converse API and Claude 4.5 Haiku. Built as part of my AWS Certified AI Practitioner (AIF-C01) hands-on portfolio.
+
+---
+
+## 📸 Screenshots
+
+### Notebook Code — Document & Questions Setup
+<img width="1902" height="573" alt="Document Q A Bot - 01" src="https://github.com/user-attachments/assets/99bf6833-fe95-49c6-8b02-8127106e51d3" />
+
+
+### Bot Output — 5 Questions Answered with Multi-Turn Memory
+<img width="1901" height="683" alt="Document Q A Bot - 02" src="https://github.com/user-attachments/assets/17b724ad-16de-46b7-8ab6-69755f14e635" />
+
+---
+
+## 📊 Results
+
+| Question | Correct Answer Given |
+|----------|---------------------|
+| Which service analyzes customer review sentiment? | ✅ Comprehend |
+| Difference between SageMaker and Bedrock? | ✅ Full comparison with bullet points |
+| Which services are fully serverless? | ✅ Comprehend + Bedrock |
+| How does pricing differ across services? | ✅ Per instance-hour vs per API call breakdown |
+| Which service detects faces in photos? | ✅ Rekognition |
+
+Total exchanges: 5 — Session complete ✅
+
+---
+
+## 🧠 What This Project Does
+
+Uses **Amazon Bedrock's Converse API** with **Claude 4.5 Haiku** to build a document-aware Q&A bot. A study document is injected into the system prompt as context, and the bot answers questions about it using multi-turn conversation memory. Each exchange is appended to `conversation_history` so the model builds on previous answers throughout the session — demonstrating the RAG pattern and multi-turn conversation management.
+
+---
+
+## 🆕 2025 Updates — What Changed
+
+| Old behaviour | New behaviour (2025) |
+|--------------|---------------------|
+| Manual "Enable model" per model | All models auto-enabled by default |
+| Model Access page in console | Retired Sep 29 2025 — use Model Catalog instead |
+| `InvokeModel` API per-model format | Unified `Converse` API works across all models |
+| Separate request format per provider | Single messages array format for all models |
+
+---
+
+## ⚙️ How It Works
+
+```
+Study document injected as system prompt context
+                    ↓
+User question added to conversation_history
+                    ↓
+bedrock.converse(modelId, system, messages)
+                    ↓
+Claude 4.5 Haiku answers from document context only
+                    ↓
+Answer appended to conversation_history
+                    ↓
+Next question builds on previous answers (multi-turn)
+```
+
+---
+
+## 💻 Core Code
+
+```python
+import boto3
+
+bedrock   = boto3.client("bedrock-runtime", region_name="us-east-1")
+MODEL_ID  = "anthropic.claude-3-haiku-20240307-v1:0"
+
+def chat_with_document(document, questions):
+    conversation_history = []
+    system_prompt = f"""You are a helpful study assistant.
+Answer questions based on this document only:
+
+{document}
+
+If the answer is not in the document, say so clearly."""
+
+    for question in questions:
+        conversation_history.append({
+            "role": "user",
+            "content": [{"text": question}]
+        })
+
+        response = bedrock.converse(
+            modelId=MODEL_ID,
+            system=[{"text": system_prompt}],
+            messages=conversation_history,
+            inferenceConfig={"maxTokens": 512, "temperature": 0.3}
+        )
+
+        answer = response["output"]["message"]["content"][0]["text"]
+        conversation_history.append({
+            "role": "assistant",
+            "content": [{"text": answer}]
+        })
+
+        print(f"Q: {question}")
+        print(f"A: {answer}\n")
+```
+
+---
+
+## 🔑 Key Concepts Demonstrated
+
+### Converse API message format
+```python
+messages = [
+    {"role": "user",      "content": [{"text": "Your question"}]},
+    {"role": "assistant", "content": [{"text": "Previous answer"}]},
+    {"role": "user",      "content": [{"text": "Follow-up question"}]}
+]
+```
+
+### Inference parameters explained
+```python
+inferenceConfig={
+    "maxTokens":  512,  # max output length
+    "temperature": 0.3, # lower = more focused, less random
+    "topP":        0.9  # nucleus sampling threshold
+}
+```
+
+---
+
+## 🧪 AWS Concepts Practiced
+
+- ✅ Amazon Bedrock `converse()` API (2025 Converse API)
+- ✅ Claude 4.5 Haiku foundation model via Bedrock
+- ✅ System prompts for controlling model behavior
+- ✅ Multi-turn conversation history management
+- ✅ RAG pattern — document injected as context
+- ✅ Inference parameters: temperature, maxTokens, topP
+- ✅ Pay-per-token serverless pricing model
+- ✅ IAM permissions — `AmazonBedrockFullAccess` policy
+- ✅ Anthropic use case form — one-time account setup
+- ✅ Model catalog — new 2025 console experience
+- ✅ Amazon Nova Lite as an alternative AWS-native model
+
+---
+
+## 📝 AIF-C01 Exam Topics This Covers
+
+| Topic | Domain |
+|-------|--------|
+| Foundation models and how to access them | Domain 2: Generative AI |
+| Prompt engineering and system prompts | Domain 2: Generative AI |
+| RAG — retrieval augmented generation | Domain 2: Generative AI |
+| Temperature, tokens, topP parameters | Domain 2: Generative AI |
+| Multi-turn conversation and context window | Domain 2: Generative AI |
+| Pre-built vs custom models trade-offs | Domain 1: Fundamentals of AI/ML |
+| Serverless AI pricing (pay-per-token) | Domain 2: Generative AI |
+| IAM permissions for AI services | Domain 5: Security & Governance |
+| Responsible AI — system prompt guardrails | Domain 4: Responsible AI |
+
+---
+
+## 🚀 How to Run
+
+### Prerequisites
+- AWS account with SageMaker Studio access
+- IAM role with `AmazonBedrockFullAccess` policy attached
+- One-time Anthropic use case form submitted via Bedrock console
+
+### Enable Anthropic Claude (one-time)
+1. Go to AWS Console → Amazon Bedrock → Model catalog
+2. Search for Claude 4.5 Haiku → Open in playground
+3. Submit the Anthropic use case form when prompted
+4. Access granted immediately — never needed again
+
+### Steps
+1. Open `bedrock_document_qa_bot.ipynb` in SageMaker Studio
+2. Run all cells top to bottom
+3. Replace `my_own_document` with any text you want to interrogate
+4. Update `my_questions` with your own questions
+
+### No cleanup needed
+Bedrock is fully serverless. No endpoints, no instances, nothing
+to shut down. Cost for this entire project: under $0.05.
+
+---
+
+## 📁 Files
+
+```
+04-bedrock/
+├── bedrock_document_qa_bot.ipynb
+├── screenshots/
+│   ├── document_qa_bot_01.png
+│   └── document_qa_bot_02.png
+└── README.md
+```
+
+---
+
+## 💡 What I Learned
+
+The most important insight from this project was understanding the **RAG pattern** — injecting a document as context so the model answers from YOUR content rather than its general training data. This is how real enterprise AI applications work: a knowledge base of company documents is retrieved and injected into the prompt at query time, keeping answers accurate and up to date. I also learned the difference between `temperature` (how creative vs focused the model is) and `maxTokens` (how long the response can be) — both are core AIF-C01 exam concepts. The 2025 Converse API made this significantly simpler than older tutorials: one unified code pattern works across Claude, Nova, Llama, and Mistral without changing anything except the `modelId`.
+
+---
 
