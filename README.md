@@ -360,7 +360,8 @@ The biggest insight from this project was understanding the difference between *
 ## 📸 Screenshot
 
 ### Final Review Report & Sentiment Breakdown
-<img width="1907" height="871" alt="Product Review Analyzer" src="https://github.com/user-attachments/assets/5bea70c2-7069-4318-a2b3-f322eceaf361" />
+<img width="1917" height="891" alt="Product Review Analyzer" src="https://github.com/user-attachments/assets/1c541085-50a1-479c-869e-c90c7751f953" />
+
 
 ---
 
