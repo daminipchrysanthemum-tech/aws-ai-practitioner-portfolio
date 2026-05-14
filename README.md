@@ -153,7 +153,7 @@ Working through this project taught me how AWS separates the training and deploy
 
 ---
 
-# 🔍 Photo Content Moderator — Amazon Rekognition
+## 🔍 Photo Content Moderator — Amazon Rekognition
 
 > Automatically scans images for inappropriate or unsafe content using Amazon Rekognition's pre-trained computer vision models. Built as part of my AWS Certified AI Practitioner (AIF-C01) hands-on portfolio.
 
@@ -716,7 +716,7 @@ inferenceConfig={
 
 ---
 
-## 📝 AIF-C01 Exam Topics This Covers
+## 📝 AIF-C01 Exam Topics It Covers
 
 | Topic | Domain |
 |-------|--------|
@@ -772,7 +772,7 @@ to shut down. Cost for this entire project: under $0.05.
 
 ## 💡 What I Learned
 
-The most important insight from this project was understanding the **RAG pattern** — injecting a document as context so the model answers from YOUR content rather than its general training data. This is how real enterprise AI applications work: a knowledge base of company documents is retrieved and injected into the prompt at query time, keeping answers accurate and up to date. I also learned the difference between `temperature` (how creative vs focused the model is) and `maxTokens` (how long the response can be) — both are core AIF-C01 exam concepts. The 2025 Converse API made this significantly simpler than older tutorials: one unified code pattern works across Claude, Nova, Llama, and Mistral without changing anything except the `modelId`.
+The most important insight from this project was understanding the **RAG pattern** — injecting a document as context so the model answers from YOUR content rather than its general training data. It's is how real enterprise AI applications work: a knowledge base of company documents is retrieved and injected into the prompt at query time, keeping answers accurate and up to date. I also learned the difference between `temperature` (how creative vs focused the model is) and `maxTokens` (how long the response can be) — both are core AIF-C01 exam concepts. The 2025 Converse API made this significantly simpler than older tutorials: one unified code pattern works across Claude, Nova, Llama, and Mistral without changing anything except the `modelId`.
 
 ---
 
