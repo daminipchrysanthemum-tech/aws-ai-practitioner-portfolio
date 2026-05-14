@@ -641,7 +641,7 @@ Next question builds on previous answers (multi-turn)
 ```python
 import boto3
 
-bedrock   = boto3.client("bedrock-runtime", region_name="us-east-1")
+bedrock   = boto3.client("bedrock-runtime", region_name="us-west-2")
 MODEL_ID  = "us.anthropic.claude-haiku-4-5-20251001-v1:0"
 
 def chat_with_document(document, questions):
