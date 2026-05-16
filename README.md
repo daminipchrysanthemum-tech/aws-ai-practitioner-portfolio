@@ -788,10 +788,10 @@ The most important insight from this project was understanding the **RAG pattern
 ## 📸 Screenshots
 
 ### Chatbot welcome screen — anonymous Guest access
-![AWS AI Assistant welcome screen showing Guest badge, custom title and subtitle, and welcome message prompting recruiters to ask about SageMaker and AWS services](screenshots/amazon_q_welcome.png)
+<img width="1079" height="658" alt="Amazon Q Business - Resume Q A chatbot" src="https://github.com/user-attachments/assets/2b3d7e86-c3c4-4338-9b6a-9c9b92dadb4e" />
 
 ### All 7 recruiter questions answered correctly
-![Amazon Q Business chatbot answering all 7 recruiter questions including AWS services, RMSE $47,521, RAG implementation in Bedrock, AIF-C01 certification in progress, and favourite project explanation](screenshots/amazon_q_questions.png)
+<img width="833" height="803" alt="Amazon Q Business - Resume Q A chatbot (Questions)" src="https://github.com/user-attachments/assets/3129c2af-91c5-4b5f-90b1-4365048481a1" />
 
 ---
 
