@@ -87,7 +87,7 @@ Data Prep → S3 Upload → Training Job → Evaluation → Feature Engineering 
 ## 🧪 AWS Concepts Practiced
 
 - ✅ SageMaker training jobs and estimators
-- ✅ S3 data input / model output
+- ✅ S3 data input/model output
 - ✅ Built-in XGBoost algorithm
 - ✅ Real-time inference endpoints
 - ✅ Hyperparameter configuration
