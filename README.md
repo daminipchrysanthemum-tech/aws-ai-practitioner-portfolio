@@ -392,7 +392,7 @@ NEGATIVE   ██     2 reviews (20%)
 
 ## 🧠 What This Project Does
 
-Uses **Amazon Comprehend's NLP APIs** to analyze 10 realistic product reviews across 4 product categories. For each review, the notebook detects overall sentiment (Positive/Negative/Mixed/Neutral) with confidence scores, extracts the top key phrases, and identifies named entities such as brand names, locations, and dates. Results are compiled into a pandas DataFrame report with a sentiment breakdown summary.
+Uses **Amazon Comprehend's NLP APIs** to analyze 10 realistic product reviews across 4 product categories. For each review, the notebook detects overall sentiment (Positive/Negative/Mixed/Neutral) with confidence scores, extracts the top key phrases, and identifies named entities such as brand names, locations, and dates. Results are compiled into a pandas DataFrame report with a summary of the sentiment breakdown.
 
 ---
 
@@ -609,7 +609,7 @@ Uses **Amazon Bedrock's Converse API** with **Claude 4.5 Haiku** to build a docu
 
 ## 🆕 2025 Updates — What Changed
 
-| Old behaviour | New behaviour (2025) |
+| Old behavior  | New behavior  (2025) |
 |--------------|---------------------|
 | Manual "Enable model" per model | All models auto-enabled by default |
 | Model Access page in console | Retired Sep 29 2025 — use Model Catalog instead |
