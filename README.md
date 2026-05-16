@@ -953,8 +953,8 @@ Console → Application → Web experience settings → Share → Create URL
 │   ├── projects_template.txt    ← template for your own projects
 │   └── skills_template.txt      ← template for skills section
 └── screenshots/
-    ├── amazon_q_welcome.png
-    └── amazon_q_questions.png
+    ├── amazon_q_business_resume_q&a_chatbot.png
+    └── amazon_q_business_resume_q&a_chatbot_questions.png
 ```
 
 ---
