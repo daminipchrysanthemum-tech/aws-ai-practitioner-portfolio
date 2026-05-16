@@ -776,7 +776,7 @@ The most important insight from this project was understanding the **RAG pattern
 
 ---
 
-## 🤖 Resume Q&A Chatbot — Amazon Q Business
+## 💬 Resume Chatbot — Amazon Q Business
 
 > A live AI-powered chatbot that answers recruiter questions about my AWS
 > projects, technical skills, and experience. Built on Amazon Q Business
