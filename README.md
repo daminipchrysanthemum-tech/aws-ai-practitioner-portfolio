@@ -963,9 +963,7 @@ Console → Application → Web experience settings → Share → Create URL
 
 The most valuable insight from this project was seeing managed RAG in action compared to the manual RAG I built in Project 4. Amazon Q Business handles
 document chunking, embedding generation, vector indexing, semantic retrieval, and grounded response generation automatically — the same pipeline that would
-take hundreds of lines of code to build manually with LangChain or LlamaIndex.
-
-The anonymous access feature (launched April 2025) transforms this from a technical exercise into a real recruiter-facing tool. The anonymous access feature (launched April 2025) transforms this from a technical exercise into a real recruiter-facing tool. Anyone can open the link and ask the bot questions about my experience without an AWS account, making it the most portfolio-impactful project of the five.
+take hundreds of lines of code to build manually with LangChain or LlamaIndex. The anonymous access feature (launched April 2025) transforms this from a technical exercise into a real recruiter-facing tool. The anonymous access feature (launched April 2025) transforms this from a technical exercise into a real recruiter-facing tool. Anyone can open the link and ask the bot questions about my experience without an AWS account, making it the most portfolio-impactful project of the five.
 
 ---
 
