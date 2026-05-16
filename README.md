@@ -182,7 +182,7 @@ All 4 images were correctly identified as safe content with `MinConfidence=10`, 
 
 ## 🧠 What This Project Does
 
-Uses **Amazon Rekognition's `detect_moderation_labels` API** to scan images stored in S3 and classify them as safe or flagged. For each image, Rekognition returns a list of moderation labels (e.g. Explicit Nudity, Violence, Drugs, Alcohol, Gambling) with confidence scores from 0–100. The notebook loops through a batch of images and produces a final summary report as a pandas DataFrame.
+Uses **Amazon Rekognition's `detect_moderation_labels` API** to scan images stored in S3 and classify them as safe or flagged. For each image, Rekognition returns a list of moderation labels (e.g., Explicit Nudity, Violence, Drugs, Alcohol, Gambling) with confidence scores from 0–100. The notebook loops through a batch of images and produces a final summary report as a pandas DataFrame.
 
 ---
 
