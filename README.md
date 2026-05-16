@@ -205,7 +205,7 @@ Image uploaded to S3
         ↓
 rekognition.detect_moderation_labels()
         ↓
-Returns list of ModerationLabels with confidence scores
+Returns a list of ModerationLabels with confidence scores
         ↓
 If labels are empty → "Clean"
 If labels found → "Flagged: <category>"
