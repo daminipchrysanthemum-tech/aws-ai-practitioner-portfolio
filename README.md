@@ -176,7 +176,7 @@ Working through this project taught me how AWS separates the training and deploy
 | test_nature.jpg | ✅ Clean |
 | test_warning.jpg | ✅ Clean |
 
-All 4 images correctly identified as safe content with `MinConfidence=10`, demonstrating that the moderator works end-to-end and correctly returns Clean for non-flagged images.
+All 4 images were correctly identified as safe content with `MinConfidence=10`, demonstrating that the moderator works end-to-end and correctly returns Clean for non-flagged images.
 
 ---
 
@@ -207,7 +207,7 @@ rekognition.detect_moderation_labels()
         ↓
 Returns list of ModerationLabels with confidence scores
         ↓
-If labels empty → "Clean"
+If labels are empty → "Clean"
 If labels found → "Flagged: <category>"
         ↓
 Results compiled into pandas DataFrame report
@@ -772,7 +772,200 @@ to shut down. Cost for this entire project: under $0.05.
 
 ## 💡 What I Learned
 
-The most important insight from this project was understanding the **RAG pattern** — injecting a document as context so the model answers from YOUR content rather than its general training data. It's is how real enterprise AI applications work: a knowledge base of company documents is retrieved and injected into the prompt at query time, keeping answers accurate and up to date. I also learned the difference between `temperature` (how creative vs focused the model is) and `maxTokens` (how long the response can be) — both are core AIF-C01 exam concepts. The 2025 Converse API made this significantly simpler than older tutorials: one unified code pattern works across Claude, Nova, Llama, and Mistral without changing anything except the `modelId`.
+The most important insight from this project was understanding the **RAG pattern** — injecting a document as context so the model answers from YOUR content rather than its general training data. It's how real enterprise AI applications work: a knowledge base of company documents is retrieved and injected into the prompt at query time, keeping answers accurate and up to date. I also learned the difference between `temperature` (how creative vs focused the model is) and `maxTokens` (how long the response can be) — both are core AIF-C01 exam concepts. The 2025 Converse API made this significantly simpler than older tutorials: one unified code pattern works across Claude, Nova, Llama, and Mistral without changing anything except the `modelId`.
+
+---
+
+## 🤖 Resume Q&A Chatbot — Amazon Q Business
+
+> A live AI-powered chatbot that answers recruiter questions about my AWS
+> projects, technical skills, and experience. Built on Amazon Q Business
+> with anonymous access — no login required to interact with it.
+> Part of my AWS Certified AI Practitioner (AIF-C01) hands-on portfolio.
+
+---
+
+## 📸 Screenshots
+
+### Chatbot welcome screen — anonymous Guest access
+![AWS AI Assistant welcome screen showing Guest badge, custom title and subtitle, and welcome message prompting recruiters to ask about SageMaker and AWS services](screenshots/amazon_q_welcome.png)
+
+### All 7 recruiter questions answered correctly
+![Amazon Q Business chatbot answering all 7 recruiter questions including AWS services, RMSE $47,521, RAG implementation in Bedrock, AIF-C01 certification in progress, and favourite project explanation](screenshots/amazon_q_questions.png)
+
+---
+
+## 💬 Live demo results
+
+Every recruiter question answered correctly from indexed documents:
+
+| Question asked | Answer pulled from docs |
+|----------------|------------------------|
+| What AWS AI services have you worked with? | SageMaker, Rekognition, Comprehend, Bedrock, Amazon Q Business |
+| Describe the SageMaker project and results | XGBoost on California Housing, 4 derived features, RMSE $47,521 |
+| What is your RMSE score? | $47,521 — exact figure cited with source |
+| What programming languages and tools? | Python, boto3, pandas, scikit-learn |
+| Studying for any AWS certifications? | AIF-C01 is currently in progress |
+| What is RAG, and have you implemented it? | Implemented in Project 4 via Bedrock Converse API with Claude 4.5 Haiku |
+| Which project are you most proud of? | Bedrock Document Q&A Bot — demonstrates full RAG architecture |
+
+---
+
+## 🧠 What this project does
+
+Deploys an **Amazon Q Business application** with anonymous user access
+that indexes three portfolio documents stored in Amazon S3. When a user
+asks a question, Q Business searches its native index using semantic search,
+retrieves the most relevant document chunks and generates a grounded answer
+with source citations. No authentication is required — anyone with the link
+can interact instantly.
+
+---
+
+## 🏗️ Architecture
+
+```
+3 portfolio documents (.txt files)
+           ↓
+   Amazon S3 bucket (us-east-1)
+           ↓
+   Amazon Q Business
+   ├── S3 data source connector (syncs documents)
+   ├── Native index (vector store — auto-provisioned)
+   ├── Native retriever (semantic search — auto-created)
+   └── Anonymous web experience (public chatbot UI)
+           ↓
+   Recruiter opens link → types question
+           ↓
+   Retriever finds relevant chunks from the index
+           ↓
+   The Foundation model generates a grounded answer
+   with source citations [1] [2] [3]
+```
+
+---
+
+## 📄 Documents indexed
+
+| File | Contents |
+|------|----------|
+| `resume.txt` | Full resume — experience, education, skills |
+| `projects.txt` | All 5 portfolio projects with results and technical details |
+| `skills.txt` | AWS services, tools, certifications in progress |
+
+---
+
+## ⚙️ AWS services and concepts used
+
+- **Amazon Q Business** — application, native index, retriever, web experience
+- **Amazon S3** — document storage and data source connector
+- **IAM** — service roles for Q Business and S3 read access
+- **Anonymous access** — public chatbot with no IAM Identity Center required
+- **Native index** — managed vector database for document embeddings
+- **Sync jobs** — automated document crawling and re-indexing
+
+---
+
+## 🧪 AWS concepts practiced
+
+- ✅ Amazon Q Business anonymous application setup
+- ✅ Native index creation (Starter tier, 1 unit)
+- ✅ Retriever auto-creation alongside index
+- ✅ S3 data source connector configuration
+- ✅ Document sync jobs and troubleshooting
+- ✅ Full RAG pipeline — document → embed → index → retrieve → generate
+- ✅ Source citations in grounded responses
+- ✅ Web experience customization (title, subtitle, welcome message)
+- ✅ Consumption-based billing vs provisioned pricing
+- ✅ Anonymous vs authenticated (IAM Identity Center) access patterns
+- ✅ IAM role permissions for cross-service access (Q Business → S3)
+
+---
+
+## 📝 AIF-C01 Exam Topics It Covers
+
+| Topic | Domain |
+|-------|--------|
+| RAG architecture — retrieve, augment, generate | Domain 3: Applications of Foundation Models |
+| Foundation models in fully managed services | Domain 2: Fundamentals of Generative AI |
+| Amazon Q Business use cases and architecture | Domain 3: Applications of Foundation Models |
+| Vector databases and semantic search | Domain 3: Applications of Foundation Models |
+| Grounded responses and source citations | Domain 4: Responsible AI |
+| Hallucination reduction via RAG | Domain 4: Responsible AI |
+| Anonymous vs authenticated access | Domain 5: Security & Governance |
+| Consumption-based AI pricing model | Domain 2: Fundamentals of Generative AI |
+
+---
+
+## 🔑 Key concept: RAG vs direct prompting
+
+This project shows the difference between two approaches:
+
+**Project 4 (Bedrock) — manual RAG:**
+```python
+# You manually inject context into every prompt
+response = bedrock.converse(
+    messages=[{"role": "user", "content": [{"text":
+        f"Context: {document}\n\nQuestion: {question}"
+    }]}]
+)
+```
+
+**Project 5 (Amazon Q) — managed RAG:**
+```
+Upload docs to S3 → Q Business handles everything automatically:
+chunking → embedding → indexing → retrieval → generation → citations
+```
+
+Same RAG architecture. Amazon Q is the fully managed, production-scale
+version. This distinction is directly tested on the AIF-C01 exam.
+
+---
+
+## 🚀 How to recreate this project
+
+### Prerequisites
+- AWS account in us-east-1
+- 3 portfolio documents saved as .txt files
+- S3 bucket in us-east-1
+
+### Steps
+1. Upload .txt files to the S3 bucket
+2. Open Amazon Q Business → Create application
+3. User access: **Anonymous** + enable **Web experience**
+4. Data sources → **Add index** → Starter, 1 unit (retriever auto-created)
+5. **Add data source** → Amazon S3 → Browse to bucket → Sync now
+6. Web experience settings → edit title, subtitle, welcome message
+7. Share → Create URL (60 min session) → copy for portfolio
+
+### Regenerating the demo link
+The anonymous URL expires per session. Regenerate anytime:
+Console → Application → Web experience settings → Share → Create URL
+
+---
+
+## 📁 Files
+
+```
+05-amazon-q/
+├── README.md
+├── sample-docs/
+│   ├── projects_template.txt    ← template for your own projects
+│   └── skills_template.txt      ← template for skills section
+└── screenshots/
+    ├── amazon_q_welcome.png
+    └── amazon_q_questions.png
+```
+
+---
+
+## 💡 What I learned
+
+The most valuable insight from this project was seeing managed RAG in action compared to the manual RAG I built in Project 4. Amazon Q Business handles
+document chunking, embedding generation, vector indexing, semantic retrieval, and grounded response generation automatically — the same pipeline that would
+take hundreds of lines of code to build manually with LangChain or LlamaIndex.
+
+The anonymous access feature (launched April 2025) transforms this from a technical exercise into a real recruiter-facing tool. The anonymous access feature (launched April 2025) transforms this from a technical exercise into a real recruiter-facing tool. Anyone can open the link and ask the bot questions about my experience without an AWS account, making it the most portfolio-impactful project of the five.
 
 ---
 
