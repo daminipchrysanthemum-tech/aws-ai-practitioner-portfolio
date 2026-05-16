@@ -210,7 +210,7 @@ Returns list of ModerationLabels with confidence scores
 If labels are empty → "Clean"
 If labels found → "Flagged: <category>"
         ↓
-Results compiled into pandas DataFrame report
+Results compiled into a pandas DataFrame report
 ```
 
 ---
